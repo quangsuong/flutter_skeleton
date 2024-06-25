@@ -24,7 +24,7 @@ if (flutterVersionName == null) {
 }
 
 android {
-    namespace = "com.example.fluter_skeleton"
+    namespace = "net.aedev.flutter_skeleton"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -35,7 +35,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.example.fluter_skeleton"
+        applicationId = "net.aedev.flutter_skeleton"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         minSdk = flutter.minSdkVersion
@@ -44,11 +44,48 @@ android {
         versionName = flutterVersionName
     }
 
-    buildTypes {
+    signingConfigs {
+        debug {
+            storeFile file("../keystore/aedev-keystore")
+            storePassword "zozo2024"
+            keyAlias "key0"
+            keyPassword "zozo2024"
+        }
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.debug
+            storeFile file("../keystore/aedev-keystore")
+            storePassword "zozo2024"
+            keyAlias "key0"
+            keyPassword "zozo2024"
+        }
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+
+            signingConfig signingConfigs.debug
+        }
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            signingConfig signingConfigs.release
+        }
+    }
+
+    flavorDimensions 'root'
+    productFlavors {
+        dev {
+            dimension "root"
+            applicationIdSuffix ".dev"
+        }
+        staging {
+            dimension "root"
+            applicationIdSuffix ".staging"
+        }
+        production {
+            dimension "root"
         }
     }
 }
