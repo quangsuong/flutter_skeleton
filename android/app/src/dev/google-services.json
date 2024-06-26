@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "38060678637",
+    "project_id": "flutter-skeleton-1a2cb",
+    "storage_bucket": "flutter-skeleton-1a2cb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:38060678637:android:430a8628bc396ba2195be4",
+        "android_client_info": {
+          "package_name": "net.aedev.flutterSkeleton"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAd9c1iQYIec8hAhI5lwcWm6VvT1Bgsugw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:38060678637:android:37b0e9120c25c00a195be4",
+        "android_client_info": {
+          "package_name": "net.aedev.flutterSkeleton.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAd9c1iQYIec8hAhI5lwcWm6VvT1Bgsugw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:38060678637:android:696a1ecfd211ce2f195be4",
+        "android_client_info": {
+          "package_name": "net.aedev.flutterSkeleton.staging"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAd9c1iQYIec8hAhI5lwcWm6VvT1Bgsugw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
