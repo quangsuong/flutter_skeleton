@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyDno-nKy3DMzuas961m5U8y3dhqREM6c6A</string>
+	<key>GCM_SENDER_ID</key>
+	<string>38060678637</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>net.aedev.flutterSkeleton.staging</string>
+	<key>PROJECT_ID</key>
+	<string>flutter-skeleton-1a2cb</string>
+	<key>STORAGE_BUCKET</key>
+	<string>flutter-skeleton-1a2cb.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:38060678637:ios:4d8062fafe0c39e6195be4</string>
+</dict>
+</plist>
