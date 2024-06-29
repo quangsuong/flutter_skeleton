@@ -1,0 +1,103 @@
+fastlane_require 'dotenv'
+
+default_platform(:android)
+before_all do
+  # Have an easy way to get the root of the project
+  def root_path
+    Dir.pwd.sub(/.*\Kfastlane/, '').sub(/.*\Kandroid/, '').sub(/.*\Kios/, '').sub(/.*\K\/\//, '')
+  end
+  # Load environment variables
+  UI.message("env file path: #{root_path}env/.env.#{ENV['ENVFILE']}")
+  Dotenv.load("#{root_path}env/.env.#{ENV['ENVFILE']}")
+
+  # Have an easy way to get the root of the project
+  def root_path
+    Dir.pwd.sub(/.*\Kfastlane/, '').sub(/.*\Kandroid/, '').sub(/.*\Kios/, '').sub(/.*\K\/\//, '')
+  end
+
+  # Have an easy way to run flutter tasks on the root of the project
+  lane :sh_on_root do |options|
+    command = options[:command]
+    sh("cd #{root_path} && #{command}")
+  end
+end
+
+platform :android do
+  private_lane :build_apk do
+    env = ENV['ANDROID_SCHEME']
+    desc "Building #{env} Android APK"
+    sh_on_root(command: "make build-apk")
+  end
+
+  private_lane :delete_apk do
+      desc "Deleting Android APK"
+      sh_on_root(command: "rm -rf #{root_path}/build/app/outputs/flutter-apk")
+      sh_on_root(command: "rm -rf #{root_path}/build/app/outputs/apk")
+    end
+
+  lane :deploy do
+    build_apk
+
+    firebase_app_distribution(
+      app: ENV['FIREBASE_ANDROID_APP_ID'],
+      testers: ENV['ANDROID_FIREBASE_APP_DISTRIBUTION_TESTERS'],
+      android_artifact_type: "APK",
+      android_artifact_path: "#{root_path}build/app/outputs/flutter-apk/app-#{ENV['SCHEME']}-release.apk",
+      release_notes: ENV['ANDROID_FIREBASE_APP_DISTRIBUTION_RELEASE_NOTES'],
+      service_credentials_file: ENV['ANDROID_FIREBASE_APP_DISTRIBUTION_CREDENTIALS_FILE_PATH'],
+    )
+
+    delete_apk
+  end
+end
+
+platform :ios do
+  # Updates XCode project settings to use a different code signing based on method
+  private_lane :archive do |options|
+    method = options[:method]
+    env = ENV['IOS_SCHEME']
+    scheme = env == "dev" ? "dev" : "prod"
+    configuration = env == "dev" ? "Release-dev" : "Release-prod"
+
+    update_code_signing_settings(
+      build_configurations: configuration,
+      use_automatic_signing: true
+    )
+
+    update_project_team(
+      teamid: ENV['IOS_TEAM_ID']
+    )
+
+    build_app(
+      output_directory: "#{root_path}/build/ios",
+      build_path: "#{root_path}/build/ios",
+      archive_path: "#{root_path}/build/ios",
+      export_method: method,
+      scheme: env,
+      configuration: configuration,
+      xcargs: "-allowProvisioningUpdates"
+    )
+  end
+
+  lane :build do |options|
+    env = ENV['IOS_SCHEME']
+
+    params = env == "dev" ? '--flavor dev -t lib/main_dev.dart ' : '--flavor prod -t lib/main_prod.dart '
+    desc("Cleaning...")
+    sh_on_root(command: "fvm use #{ENV['FLUTTER_VERSION']} && fvm flutter clean && rm -Rf ios/Pods && rm -Rf ios/.symlinks && rm -Rf ios/Flutter/Flutter.framework && rm -Rf ios/Flutter/Flutter.podspec")
+    desc("Building...")
+    sh_on_root(command: "fvm use #{ENV['FLUTTER_VERSION']} && fvm flutter build ipa #{params}")
+  end
+
+  lane :deploy_staging do
+    build(sign_enabled: true)
+    archive(method: "ad-hoc")
+
+    firebase_app_distribution(
+      app: ENV['IOS_FIREBASE_APP_DISTRIBUTION_APP'],
+      testers: ENV['IOS_FIREBASE_APP_DISTRIBUTION_TESTERS'],
+      release_notes: ENV['IOS_FIREBASE_APP_DISTRIBUTION_RELEASE_NOTES'],
+      service_credentials_file: ENV['IOS_FIREBASE_APP_DISTRIBUTION_CREDENTIALS_FILE_PATH'],
+    )
+  end
+end

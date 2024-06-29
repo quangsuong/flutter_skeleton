@@ -41,3 +41,6 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+/fastlane/report.xml
+
+/env/firebase-app-distribuild-auth.json

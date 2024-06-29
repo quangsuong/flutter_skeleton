@@ -28,7 +28,22 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      builder: (context, child) => Env.name != Envs.PRODUCTION
+          ? Env.name.isNotEmpty
+              ? Banner(
+                  message: Env.name.toString(),
+                  textDirection: TextDirection.ltr,
+                  location: BannerLocation.topStart,
+                  child: child,
+                )
+              : Banner(
+                  message: "ENVLESS",
+                  textDirection: TextDirection.ltr,
+                  location: BannerLocation.topStart,
+                  child: child,
+                )
+          : child!,
+      home: const MyHomePage(title: 'AeDev Home Page'),
     );
   }
 }
