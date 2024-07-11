@@ -1,27 +1,41 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_skeleton/view/screens/detail/detail_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_skeleton/core/utils/my_color.dart';
+
+import '../../../blocs/item_bloc.dart';
+import 'home_view_model.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  final HomeViewModel viewModel = HomeViewModel();
+
+  HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home Page'),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const DetailScreen(),
-              ),
+      appBar: AppBar(title: const Text('Items')),
+      body: BlocBuilder<ItemBloc, ItemState>(
+        bloc: viewModel.itemBloc,
+        builder: (context, state) {
+          if (state is ItemLoading) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is ItemLoaded) {
+            return ListView.builder(
+              itemCount: state.items.data.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(state.items.data[index].firstName +
+                      state.items.data[index].lastName),
+                  subtitle: Text(state.items.data[index].lastName),
+                  tileColor: MyColor.t1,
+                );
+              },
             );
-          },
-          child: const Text('Go to Second Page'),
-        ),
+          } else if (state is ItemError) {
+            return const Center(child: Text('Failed to fetch items'));
+          }
+          return Container();
+        },
       ),
     );
   }
