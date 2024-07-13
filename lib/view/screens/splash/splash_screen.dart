@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_skeleton/core/utils/my_color.dart';
 import 'package:flutter_skeleton/core/utils/my_images.dart';
-import 'package:flutter_skeleton/view/screens/home/home_page_screen.dart';
+
+import '../main_page.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -29,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
     await Future.delayed(const Duration(seconds: 3), () {});
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => HomePage()),
+      MaterialPageRoute(builder: (context) => const MainPage()),
     );
   }
 

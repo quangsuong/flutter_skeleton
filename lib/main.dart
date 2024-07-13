@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_skeleton/constants/env.dart';
 import 'package:flutter_skeleton/view/screens/splash/splash_screen.dart';
 
+import 'di/locator.dart';
 import 'firebase_options.dart';
 import 'push_notification_service.dart';
 
@@ -12,6 +13,8 @@ Future<void> _messageHandler(RemoteMessage message) async {
 }
 
 void main() async {
+  ServiceLocator.instance.initialise();
+
   runApp(const MyApp());
   FirebaseMessaging.onBackgroundMessage(_messageHandler);
   await PushNotificationService().setupInteractedMessage();
