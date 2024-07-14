@@ -1,7 +1,6 @@
-// lib/presentation/pages/main_page.dart
-
 import 'package:flutter/material.dart';
-import 'package:flutter_skeleton/view/screens/settings/settings_page.dart';
+import 'package:flutter_skeleton/ui/views/login/login_view.dart';
+import 'package:flutter_skeleton/ui/views/settings/settings_page.dart';
 
 import 'home/home_page_screen.dart';
 import 'user/user_page.dart';
@@ -19,6 +18,7 @@ class _MainPageState extends State<MainPage> {
     HomePage(),
     const UserPage(),
     const SettingsPage(),
+    LoginView(),
   ];
 
   void _onTabTapped(int index) {
@@ -46,6 +46,10 @@ class _MainPageState extends State<MainPage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
             label: 'Settings',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.login),
+            label: 'Login',
           ),
         ],
       ),

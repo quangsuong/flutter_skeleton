@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_skeleton/core/utils/my_color.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-import '../../../blocs/item_bloc.dart';
-import '../../../di/locator.dart';
+import '../../../core/di/locator.dart';
+import '../../../core/utils/my_color.dart';
+import '../../../logic/blocs/item_bloc.dart';
 import 'home_view_model.dart';
 
 class HomePage extends StatelessWidget {
@@ -20,7 +21,8 @@ class HomePage extends StatelessWidget {
         bloc: viewModel.itemBloc,
         builder: (context, state) {
           if (state is ItemLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(
+                child: SpinKitCircle(size: 50, color: Colors.black));
           } else if (state is ItemLoaded) {
             return ListView.builder(
               itemCount: state.items.data.length,

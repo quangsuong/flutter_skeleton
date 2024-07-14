@@ -2,10 +2,10 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_skeleton/core/utils/bloc_extensions.dart';
 
-import '../di/locator.dart';
-import '../models/api_response.dart';
-import '../models/item_model.dart';
-import '../repositories/item_repository.dart';
+import '../../core/di/locator.dart';
+import '../../data/models/api_response.dart';
+import '../../data/models/item_model.dart';
+import '../../data/repositories/item_repository.dart';
 
 part 'item_event.dart';
 part 'item_state.dart';
