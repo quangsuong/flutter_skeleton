@@ -1,3 +1,6 @@
+import 'package:floor/floor.dart';
+
+@Entity(tableName: 'item',primaryKeys: ['id'])
 class Item {
   final int id;
   final String firstName;

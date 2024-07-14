@@ -13,7 +13,8 @@ Future<void> _messageHandler(RemoteMessage message) async {
 }
 
 void main() async {
-  ServiceLocator.instance.initialise();
+  WidgetsFlutterBinding.ensureInitialized();
+  await ServiceLocator.instance.initialize();
 
   runApp(const MyApp());
   FirebaseMessaging.onBackgroundMessage(_messageHandler);
