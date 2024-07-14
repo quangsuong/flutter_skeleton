@@ -1,10 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_skeleton/constants/env.dart';
-import 'package:flutter_skeleton/view/screens/splash/splash_screen.dart';
+import 'package:flutter_skeleton/ui/views/splash/splash_screen.dart';
 
-import 'di/locator.dart';
+import 'core/constants/env.dart';
+import 'core/di/locator.dart';
 import 'firebase_options.dart';
 import 'push_notification_service.dart';
 

@@ -1,9 +1,8 @@
-
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
 
-import 'constants/env.dart';
+import 'core/constants/env.dart';
 
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
@@ -32,7 +31,6 @@ class DefaultFirebaseOptions {
     projectId: Env.firebaseProjectId,
     storageBucket: Env.firebaseStorageBucket,
   );
-
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: Env.firebaseIosApiKey,

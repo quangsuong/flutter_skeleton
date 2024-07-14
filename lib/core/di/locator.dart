@@ -1,9 +1,12 @@
 import 'package:get_it/get_it.dart';
 
-import '../blocs/item_bloc.dart';
-import '../repositories/item_repository.dart';
+import '../../data/repositories/auth_repository.dart';
+import '../../data/repositories/item_repository.dart';
+import '../../logic/blocs/item_bloc.dart';
+import '../../logic/blocs/login/login_bloc.dart';
+import '../../ui/views/home/home_view_model.dart';
+import '../../ui/views/login/login_view_model.dart';
 import '../services/item_service.dart';
-import '../view/screens/home/home_view_model.dart';
 
 class ServiceLocator {
   static ServiceLocator instance = ServiceLocator._();
@@ -17,6 +20,9 @@ class ServiceLocator {
     registerSingletonIfNeeded(ItemRepository());
     registerSingletonIfNeeded(ItemBloc());
     registerSingletonIfNeeded(HomeViewModel());
+    registerSingletonIfNeeded(AuthRepository());
+    registerSingletonIfNeeded(LoginBloc());
+    registerSingletonIfNeeded(LoginViewModel());
   }
 
   void registerSingletonIfNeeded<T extends Object>(T instance) {

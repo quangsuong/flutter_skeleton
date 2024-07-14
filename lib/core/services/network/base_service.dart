@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_skeleton/constants/env.dart';
-import 'package:flutter_skeleton/models/api_response.dart';
-import 'package:flutter_skeleton/services/network/auth_interceptor.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
+import '../../../data/models/api_response.dart';
 import '../../constants/constants.dart';
+import '../../constants/env.dart';
+import 'auth_interceptor.dart';
 
 class BaseService<T> {
   final Dio _dio;
