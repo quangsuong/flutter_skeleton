@@ -8,3 +8,20 @@ abstract class ItemEvent extends Equatable {
 }
 
 class FetchItemsEvent extends ItemEvent {}
+
+class GetLocalItemsEvent extends ItemEvent {}
+class RemoveLocalItemEvent extends ItemEvent {
+  final Item item;
+  const RemoveLocalItemEvent(this.item);
+
+  @override
+  List<Object> get props => [item];
+
+}
+class SaveLocalItemEvent extends ItemEvent {
+  final Item item;
+  const SaveLocalItemEvent(this.item);
+
+  @override
+  List<Object> get props => [item];
+}

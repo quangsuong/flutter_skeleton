@@ -18,6 +18,15 @@ class ItemLoaded extends ItemState {
   List<Object> get props => [items];
 }
 
+class ItemLocalLoaded extends ItemState {
+  final List<Item> items;
+
+  const ItemLocalLoaded({required this.items});
+
+  @override
+  List<Object> get props => [items];
+}
+
 class ItemError extends ItemState {
   final String error;
 

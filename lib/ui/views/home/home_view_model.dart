@@ -7,4 +7,8 @@ class HomeViewModel {
   void fetchItems() {
     itemBloc.add(FetchItemsEvent());
   }
+
+  void saveLocalItem(dynamic item) {
+    itemBloc.add(SaveLocalItemEvent(item));
+  }
 }

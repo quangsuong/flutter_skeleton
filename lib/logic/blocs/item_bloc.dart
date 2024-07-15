@@ -16,6 +16,9 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
 
   ItemBloc() : super(ItemLoading()) {
     on<FetchItemsEvent>(_fetchItems);
+    on<GetLocalItemsEvent>(_getLocalItems);
+    on<RemoveLocalItemEvent>(_removeLocalItem);
+    on<SaveLocalItemEvent>(_saveLocalItem);
   }
 
   void _fetchItems(FetchItemsEvent event, Emitter<ItemState> emit) async {
@@ -23,6 +26,37 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
     try {
       final items = await itemRepository.fetchItems();
       emitSafely(ItemLoaded(items: items));
+    } catch (e) {
+      emitSafely(ItemError(error: e.toString()));
+    }
+  }
+
+  void _getLocalItems(GetLocalItemsEvent event, Emitter<ItemState> emit) async {
+    emitSafely(ItemLoading());
+    try {
+      final items = await itemRepository.getLocalSavedItems();
+      emitSafely(ItemLocalLoaded(items: items));
+    } catch (e) {
+      emitSafely(ItemError(error: e.toString()));
+    }
+  }
+
+  void _removeLocalItem(
+      RemoveLocalItemEvent event, Emitter<ItemState> emit) async {
+    emitSafely(ItemLoading());
+    try {
+      await itemRepository.removeLocalItem(event.item);
+      final items = await itemRepository.getLocalSavedItems();
+      emitSafely(ItemLocalLoaded(items: items));
+    } catch (e) {
+      emitSafely(ItemError(error: e.toString()));
+    }
+  }
+
+  void _saveLocalItem(
+      SaveLocalItemEvent event, Emitter<ItemState> emit) async {
+    try {
+      await itemRepository.saveLocalItem(event.item);
     } catch (e) {
       emitSafely(ItemError(error: e.toString()));
     }
