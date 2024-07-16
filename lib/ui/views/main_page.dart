@@ -3,6 +3,7 @@ import 'package:flutter_skeleton/generated/l10n.dart';
 import 'package:flutter_skeleton/ui/views/login/login_view.dart';
 import 'package:flutter_skeleton/ui/views/settings/settings_page.dart';
 
+import '../../core/utils/my_color.dart';
 import 'home/home_page_screen.dart';
 import 'user/user_page.dart';
 
@@ -35,6 +36,9 @@ class _MainPageState extends State<MainPage> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: _onTabTapped,
+        backgroundColor: MyColor.closeRedColor,
+        unselectedItemColor: MyColor.gmailColor,
+        selectedItemColor: MyColor.red,
         items: [
           BottomNavigationBarItem(
             icon: const Icon(Icons.home),
