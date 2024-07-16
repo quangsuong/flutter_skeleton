@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_skeleton/generated/l10n.dart';
 import 'package:flutter_skeleton/ui/views/login/login_view.dart';
 import 'package:flutter_skeleton/ui/views/settings/settings_page.dart';
 
@@ -17,7 +18,7 @@ class _MainPageState extends State<MainPage> {
   final List<Widget> _pages = [
     HomePage(),
     const UserPage(),
-    const SettingsPage(),
+    SettingsPage(),
     LoginView(),
   ];
 
@@ -34,22 +35,22 @@ class _MainPageState extends State<MainPage> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: _onTabTapped,
-        items: const [
+        items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+            icon: const Icon(Icons.home),
+            label: S.of(context).home,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'User',
+            icon: const Icon(Icons.person),
+            label: S.of(context).user,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
+            icon: const Icon(Icons.settings),
+            label: S.of(context).setting,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.login),
-            label: 'Login',
+            icon: const Icon(Icons.login),
+            label: S.of(context).login,
           ),
         ],
       ),
