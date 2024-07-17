@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_skeleton/core/utils/localization.dart';
 import 'package:flutter_skeleton/data/models/login_model.dart';
-import 'package:flutter_skeleton/generated/l10n.dart';
 import 'package:flutter_skeleton/ui/views/login/login_view_model.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
@@ -20,7 +20,7 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(S.of(context).login)),
+      appBar: AppBar(title: Text(AppLocalizations.of(context).translate('login'))),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -28,11 +28,11 @@ class LoginView extends StatelessWidget {
           children: [
             TextField(
               controller: _usernameController,
-              decoration:  InputDecoration(labelText: S.of(context).username),
+              decoration:  InputDecoration(labelText: AppLocalizations.of(context).translate('username')),
             ),
             TextField(
               controller: _passwordController,
-              decoration: InputDecoration(labelText: S.of(context).password),
+              decoration: InputDecoration(labelText: AppLocalizations.of(context).translate('password')),
               obscureText: true,
             ),
             const SizedBox(height: 20),
@@ -69,7 +69,7 @@ class LoginView extends StatelessWidget {
                     loginViewModel.login(
                         LoginModel(username: username, password: password));
                   },
-                  child: Text(S.of(context).login),
+                  child: Text(AppLocalizations.of(context).translate('login')),
                 );
               },
             ),

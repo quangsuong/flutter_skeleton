@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_skeleton/generated/l10n.dart';
+import 'package:flutter_skeleton/core/utils/localization.dart';
 import 'package:flutter_skeleton/ui/views/login/login_view.dart';
 import 'package:flutter_skeleton/ui/views/settings/settings_page.dart';
 
@@ -42,19 +42,19 @@ class _MainPageState extends State<MainPage> {
         items: [
           BottomNavigationBarItem(
             icon: const Icon(Icons.home),
-            label: S.of(context).home,
+            label: AppLocalizations.of(context).translate('home'),
           ),
           BottomNavigationBarItem(
             icon: const Icon(Icons.person),
-            label: S.of(context).user,
+            label: AppLocalizations.of(context).translate('user'),
           ),
           BottomNavigationBarItem(
             icon: const Icon(Icons.settings),
-            label: S.of(context).setting,
+            label: AppLocalizations.of(context).translate('setting'),
           ),
           BottomNavigationBarItem(
             icon: const Icon(Icons.login),
-            label: S.of(context).login,
+            label: AppLocalizations.of(context).translate('login'),
           ),
         ],
       ),

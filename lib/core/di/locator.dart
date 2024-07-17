@@ -1,8 +1,9 @@
 import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../data/repositories/auth_repository.dart';
 import '../../data/repositories/item_repository.dart';
-import '../../logic/blocs/app/app_bloc.dart';
+import '../../logic/blocs/app/lang/language_bloc.dart';
 import '../../logic/blocs/item_bloc.dart';
 import '../../logic/blocs/login/login_bloc.dart';
 import '../../ui/views/home/home_view_model.dart';
@@ -21,8 +22,11 @@ class ServiceLocator {
 
   Future<void> initialize() async {
     final database = await $FloorAppDatabase.databaseBuilder('app_database.db').build();
+    final sharedPreferences = await SharedPreferences.getInstance();
+
     registerSingletonIfNeeded<AppDatabase>(database);
-    registerSingletonIfNeeded(AppBloc());
+    registerSingletonIfNeeded<SharedPreferences>(sharedPreferences);
+    registerSingletonIfNeeded(LanguageBloc());
     registerSingletonIfNeeded(ItemService());
     registerSingletonIfNeeded(ItemRepository());
     registerSingletonIfNeeded(ItemBloc());

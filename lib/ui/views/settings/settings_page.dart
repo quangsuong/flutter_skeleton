@@ -3,9 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:flutter_skeleton/core/constants/language.dart';
 import 'package:flutter_skeleton/core/di/locator.dart';
-import 'package:flutter_skeleton/generated/l10n.dart';
-import 'package:flutter_skeleton/logic/blocs/app/app_bloc.dart';
+import 'package:flutter_skeleton/core/utils/localization.dart';
+import 'package:flutter_skeleton/logic/blocs/app/lang/language_bloc.dart';
 import 'settings_view_model.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -16,8 +17,8 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AppBloc, AppState>(
-      bloc: viewModel.appBloc,
+    return BlocBuilder<LanguageBloc, LanguageState>(
+      bloc: viewModel.languageBloc,
       builder: (context, state) {
         return Center(
           child: ElevatedButton(
@@ -26,11 +27,11 @@ class SettingsPage extends StatelessWidget {
               shadowColor: Colors.white,
             ),
             onPressed: () {
-              viewModel.changeLanguage(state.language == LanguageType.en
-                  ? LanguageType.vi
-                  : LanguageType.en);
+              viewModel.changeLanguage(state.locale == MyLanguages.en
+                  ? MyLanguages.vi
+                  : MyLanguages.en);
             },
-            child: Text(S.of(context).changeLanguage),
+            child: Text(AppLocalizations.of(context).translate('changeLanguage')),
           ),
         );
       },
