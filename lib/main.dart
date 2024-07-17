@@ -3,13 +3,13 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_skeleton/core/utils/localization.dart';
 import 'package:flutter_skeleton/logic/blocs/app/app_bloc.dart';
 import 'package:flutter_skeleton/ui/views/splash/splash_screen.dart';
 
 import 'core/constants/env.dart';
 import 'core/di/locator.dart';
 import 'firebase_options.dart';
-import 'generated/l10n.dart';
 import 'push_notification_service.dart';
 
 Future<void> _messageHandler(RemoteMessage message) async {
@@ -60,12 +60,12 @@ class MyApp extends StatelessWidget {
           home: const SplashScreen(),
           locale: Locale(state.language == LanguageType.en ? 'en' : 'vi'),
           localizationsDelegates: const [
-            S.delegate,
+            AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          supportedLocales: S.delegate.supportedLocales,
+          supportedLocales: AppLocalizations.supportedLocales,
           localeResolutionCallback: (locale, supportedLocales) {
             if (locale == null) {
               return supportedLocales.first;

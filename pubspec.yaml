@@ -53,6 +53,7 @@ flutter:
   assets:
     - assets/images/
     - assets/animation/
+    - assets/lang/
     - assets/
   fonts:
     - family: Schyler
@@ -67,6 +68,3 @@ flutter:
           weight: 600
         - asset: assets/fonts/mulish/Mulish-Bold.ttf
           weight: 700
-
-flutter_intl:
-  enabled: true
