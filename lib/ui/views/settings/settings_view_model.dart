@@ -1,11 +1,11 @@
-import 'package:flutter_skeleton/logic/blocs/app/app_bloc.dart';
+import 'package:flutter_skeleton/logic/blocs/app/lang/language_bloc.dart';
 
 import '../../../core/di/locator.dart';
 
 class SettingViewModel {
-  final AppBloc appBloc = ServiceLocator.instance.get<AppBloc>();
+  final LanguageBloc languageBloc = ServiceLocator.instance.get<LanguageBloc>();
 
-  void changeLanguage(LanguageType language) {
-    appBloc.add(ChangeLanguageEvent(language));
+  void changeLanguage(String locale) {
+    languageBloc.add(ChangeLanguage(locale));
   }
 }

@@ -1,4 +1,4 @@
-class SharedPreferenceHelper {
+class SharedPreferenceKey {
   static const String ACCESS_TOKEN_KEY = 'access_token';
   static const String accessTokenType = 'access_type';
   static const String resetPassTokenKey = 'reset_pass_token';

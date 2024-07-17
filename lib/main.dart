@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_skeleton/core/utils/localization.dart';
-import 'package:flutter_skeleton/logic/blocs/app/app_bloc.dart';
+import 'package:flutter_skeleton/logic/blocs/app/lang/language_bloc.dart';
 import 'package:flutter_skeleton/ui/views/splash/splash_screen.dart';
 
 import 'core/constants/env.dart';
@@ -26,15 +26,16 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  final AppBloc appBloc = ServiceLocator.instance.get<AppBloc>();
+  final LanguageBloc languageBloc = ServiceLocator.instance.get<LanguageBloc>();
 
   MyApp({super.key});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AppBloc, AppState>(
-      bloc: appBloc,
+    languageBloc.add(LoadLanguage());
+    return BlocBuilder<LanguageBloc, LanguageState>(
+      bloc: languageBloc,
       builder: (context, state) {
         return MaterialApp(
           title: Env.name,
@@ -58,7 +59,7 @@ class MyApp extends StatelessWidget {
                     )
               : child!,
           home: const SplashScreen(),
-          locale: Locale(state.language == LanguageType.en ? 'en' : 'vi'),
+          locale: Locale(state.locale),
           localizationsDelegates: const [
             AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
