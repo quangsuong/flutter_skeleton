@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter_skeleton/core/constants/language.dart';
 import 'package:flutter_skeleton/core/constants/shared_pref_key.dart';
+import 'package:flutter_skeleton/logic/blocs/dialog/dialog_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constants/zozo_app.dart';
@@ -21,6 +22,7 @@ class AuthInterceptor extends Interceptor {
 
   SharedPreferences sharedPreferences =
       ServiceLocator.instance.get<SharedPreferences>();
+  DialogBloc dialogBloc = ServiceLocator.instance.get<DialogBloc>();
 
   @override
   void onRequest(
@@ -90,6 +92,22 @@ class AuthInterceptor extends Interceptor {
       }
     } else {
       // ignore other error is not unauthorized
+      switch (response?.statusCode) {
+        case 400:
+          dialogBloc.add(const ShowDialogEvent.withMessage('Bad request'));
+          break;
+        case 404:
+          dialogBloc.add(const ShowDialogEvent.withMessage('Not found'));
+          break;
+        case 500:
+          dialogBloc
+              .add(const ShowDialogEvent.withMessage('Internal server error'));
+          break;
+        default:
+          dialogBloc
+              .add(const ShowDialogEvent.withMessage('Something went wrong'));
+          break;
+      }
       return handler.next(err);
     }
   }

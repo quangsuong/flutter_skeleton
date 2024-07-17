@@ -1,9 +1,19 @@
 {
-    "home": "Trang chủ",
-    "user": "Người dùng",
-    "setting": "Cài đặt",
-    "login": "Đăng nhập",
-    "username": "Tài khoản",
-    "password": "Mật khẩu",
-    "changeLanguage": "Đổi ngôn ngữ"
+  "home": "Trang chủ",
+  "user": "Người dùng",
+  "setting": "Cài đặt",
+  "login": "Đăng nhập",
+  "username": "Tài khoản",
+  "password": "Mật khẩu",
+  "changeLanguage": "Đổi ngôn ngữ",
+  "notification": "Thông báo",
+  "close": "Đóng",
+  "400": "Yêu cầu không hợp lệ",
+  "401": "Không được phép",
+  "402": "Yêu cầu thanh toán",
+  "403": "Cấm truy cập",
+  "404": "Không tìm thấy trang",
+  "500": "Lỗi máy chủ nội bộ",
+  "503": "Dịch vụ không khả dụng",
+  "504": "Hết thời gian chờ của cổng"
 }

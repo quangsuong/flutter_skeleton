@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../data/repositories/auth_repository.dart';
 import '../../data/repositories/item_repository.dart';
 import '../../logic/blocs/app/lang/language_bloc.dart';
+import '../../logic/blocs/dialog/dialog_bloc.dart';
 import '../../logic/blocs/item_bloc.dart';
 import '../../logic/blocs/login/login_bloc.dart';
 import '../../ui/views/home/home_view_model.dart';
@@ -28,6 +29,7 @@ class ServiceLocator {
     registerSingletonIfNeeded<AppDatabase>(database);
     registerSingletonIfNeeded<SharedPreferences>(sharedPreferences);
 
+    registerSingletonIfNeeded(DialogBloc());
     registerSingletonIfNeeded(LanguageBloc());
     registerSingletonIfNeeded(ItemService());
     registerSingletonIfNeeded(ItemRepository());

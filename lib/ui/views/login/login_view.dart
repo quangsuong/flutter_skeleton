@@ -20,7 +20,8 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(AppLocalizations.of(context).translate('login'))),
+      appBar:
+          AppBar(title: Text(AppLocalizations.of(context).translate('login'))),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -28,11 +29,15 @@ class LoginView extends StatelessWidget {
           children: [
             TextField(
               controller: _usernameController,
-              decoration:  InputDecoration(labelText: AppLocalizations.of(context).translate('username')),
+              decoration: InputDecoration(
+                  labelText:
+                      AppLocalizations.of(context).translate('username')),
             ),
             TextField(
               controller: _passwordController,
-              decoration: InputDecoration(labelText: AppLocalizations.of(context).translate('password')),
+              decoration: InputDecoration(
+                  labelText:
+                      AppLocalizations.of(context).translate('password')),
               obscureText: true,
             ),
             const SizedBox(height: 20),
