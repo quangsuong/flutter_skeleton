@@ -10,8 +10,8 @@ import '../../ui/views/home/home_view_model.dart';
 import '../../ui/views/login/login_view_model.dart';
 import '../../ui/views/saved_item/saved_item_view_model.dart';
 import '../../ui/views/settings/settings_view_model.dart';
-import '../services/local/app_database.dart';
 import '../services/item_service.dart';
+import '../services/local/app_database.dart';
 
 class ServiceLocator {
   static ServiceLocator instance = ServiceLocator._();
@@ -21,11 +21,13 @@ class ServiceLocator {
   ServiceLocator._();
 
   Future<void> initialize() async {
-    final database = await $FloorAppDatabase.databaseBuilder('app_database.db').build();
+    final database =
+        await $FloorAppDatabase.databaseBuilder('app_database.db').build();
     final sharedPreferences = await SharedPreferences.getInstance();
 
     registerSingletonIfNeeded<AppDatabase>(database);
     registerSingletonIfNeeded<SharedPreferences>(sharedPreferences);
+
     registerSingletonIfNeeded(LanguageBloc());
     registerSingletonIfNeeded(ItemService());
     registerSingletonIfNeeded(ItemRepository());
