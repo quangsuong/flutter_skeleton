@@ -1,14 +1,19 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter_skeleton/core/constants/language.dart';
+import 'package:flutter_skeleton/core/constants/shared_pref_key.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constants/zozo_app.dart';
+import '../../di/locator.dart';
 
 class AuthInterceptor extends Interceptor {
   final Dio _dio;
   String? _accessToken;
   String? _refreshToken;
-  Map<String, String>? _headers;
+  SharedPreferences sharedPreferences =
+      ServiceLocator.instance.get<SharedPreferences>();
 
   AuthInterceptor(this._dio);
 
@@ -16,19 +21,8 @@ class AuthInterceptor extends Interceptor {
   void onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
     // Add the Authorization header to the request
-    if (_headers == null) {
-      _headers = {};
-      var zozoApp = ZozoApp();
-      var deviceInfo = await zozoApp.getDeviceInfo();
-      _headers!['Device-name'] = deviceInfo[Platform.isIOS ? 'name' : 'model'];
-      _headers!['Device-id'] =
-          deviceInfo[Platform.isIOS ? 'identifierForVendor' : 'id'];
-      _headers!['Device-OS'] =
-          deviceInfo[Platform.isIOS ? 'systemName' : 'version.baseOS'];
-      _headers!['Device-version'] =
-          deviceInfo[Platform.isIOS ? 'systemVersion' : 'version.release'];
-    }
-    options.headers.addAll(_headers ?? {});
+    var headers = await initHeader();
+    options.headers.addAll(headers);
     options.headers['Authorization'] = 'Bearer $_accessToken';
     return handler.next(options); // Continue with the request
   }
@@ -80,5 +74,47 @@ class AuthInterceptor extends Interceptor {
       print('Failed to refresh token: $e');
       return null;
     }
+  }
+
+  Future<Map<String, String>> initHeader() async {
+    Map<String, String> headers = {};
+    if (sharedPreferences.containsKey(SharedPreferenceKey.deviceNameKey)) {
+      var zozoApp = ZozoApp();
+      var deviceInfo = await zozoApp.getDeviceInfo();
+      var deviceName = deviceInfo[Platform.isIOS ? 'name' : 'model'];
+      var deviceId = deviceInfo[Platform.isIOS ? 'identifierForVendor' : 'id'];
+      var deviceOs =
+          deviceInfo[Platform.isIOS ? 'systemName' : 'version.baseOS'];
+      var deviceVersion =
+          deviceInfo[Platform.isIOS ? 'systemVersion' : 'version.release'];
+      var languageCode =
+          sharedPreferences.getString(SharedPreferenceKey.langCode) ??
+              MyLanguages.en;
+      sharedPreferences.setString(
+          SharedPreferenceKey.deviceNameKey, deviceName);
+      sharedPreferences.setString(SharedPreferenceKey.deviceIdKey, deviceId);
+      sharedPreferences.setString(SharedPreferenceKey.deviceOSKey, deviceOs);
+      sharedPreferences.setString(
+          SharedPreferenceKey.deviceVersionKey, deviceVersion);
+      return {
+        'Device-name': deviceName,
+        'Device-id': deviceId,
+        'Device-OS': deviceOs,
+        'Device-version': deviceVersion,
+        'Language-code': languageCode
+      };
+    }
+    headers['Device-name'] =
+        sharedPreferences.getString(SharedPreferenceKey.deviceNameKey) ?? '';
+    headers['Device-id'] =
+        sharedPreferences.getString(SharedPreferenceKey.deviceIdKey) ?? '';
+    headers['Device-OS'] =
+        sharedPreferences.getString(SharedPreferenceKey.deviceOSKey) ?? '';
+    headers['Device-version'] =
+        sharedPreferences.getString(SharedPreferenceKey.deviceVersionKey) ?? '';
+    headers['Language-code'] =
+        sharedPreferences.getString(SharedPreferenceKey.langCode) ??
+            MyLanguages.en;
+    return headers;
   }
 }
