@@ -1,7 +1,7 @@
 class SharedPreferenceKey {
-  static const String ACCESS_TOKEN_KEY = 'access_token';
+  static const String accessTokenKey = 'access_token';
   static const String accessTokenType = 'access_type';
-  static const String resetPassTokenKey = 'reset_pass_token';
+  static const String refreshTokenKey = 'refresh_token';
   static const String userIdKey = 'user_id';
 
   static const String deviceNameKey = 'device_name';

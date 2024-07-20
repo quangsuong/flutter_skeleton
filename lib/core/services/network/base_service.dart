@@ -6,7 +6,7 @@ import '../../constants/constants.dart';
 import '../../constants/env.dart';
 import 'auth_interceptor.dart';
 
-class BaseService<T> {
+class BaseService {
   final Dio _dio;
 
   BaseService()
@@ -25,7 +25,7 @@ class BaseService<T> {
     ));
   }
 
-  Future<ApiResponse<T>> get(
+  Future<ApiResponse<T>> get<T>(
       String endpoint, T Function(Map<String, dynamic>) create) async {
     try {
       final response = await _dio.get(endpoint);
@@ -35,7 +35,7 @@ class BaseService<T> {
     }
   }
 
-  Future<ApiResponse<T>> post(String endpoint, Map<String, dynamic> data,
+  Future<ApiResponse<T>> post<T>(String endpoint, Map<String, dynamic> data,
       T Function(Map<String, dynamic>) create) async {
     try {
       final response = await _dio.post(endpoint, data: data);
