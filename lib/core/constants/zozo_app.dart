@@ -1,24 +1,20 @@
-import 'dart:io';
-
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
-class ZozoApp{
+class ZozoApp {
   static final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
-  static const version='1.0';
-  static const appId='com.zozo.anime';
-  getDeviceInfo () async{
+  static const version = '1.0';
+  static const appId = 'com.zozo.anime';
+  getDeviceInfo() async {
     var deviceData = <String, dynamic>{};
     try {
       deviceData = switch (defaultTargetPlatform) {
         TargetPlatform.android =>
-            _readAndroidBuildData(await deviceInfoPlugin.androidInfo),
+          _readAndroidBuildData(await deviceInfoPlugin.androidInfo),
         TargetPlatform.iOS =>
-            _readIosDeviceInfo(await deviceInfoPlugin.iosInfo),
-        _ => <String, dynamic>{
-          'Error:': 'Fuchsia platform isn\'t supported'
-        },
+          _readIosDeviceInfo(await deviceInfoPlugin.iosInfo),
+        _ => <String, dynamic>{'Error:': 'Fuchsia platform isn\'t supported'},
       };
     } on PlatformException {
       deviceData = <String, dynamic>{
@@ -27,6 +23,7 @@ class ZozoApp{
     }
     return deviceData ?? '';
   }
+
   Map<String, dynamic> _readAndroidBuildData(AndroidDeviceInfo build) {
     return <String, dynamic>{
       'version.securityPatch': build.version.securityPatch,
@@ -59,6 +56,7 @@ class ZozoApp{
       'isLowRamDevice': build.isLowRamDevice,
     };
   }
+
   Map<String, dynamic> _readIosDeviceInfo(IosDeviceInfo data) {
     return <String, dynamic>{
       'name': data.name,
