@@ -1,3 +1,4 @@
+import 'package:flutter_skeleton/logic/blocs/app/theme/theme_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -31,6 +32,7 @@ class ServiceLocator {
 
     registerSingletonIfNeeded(DialogBloc());
     registerSingletonIfNeeded(LanguageBloc());
+    registerSingletonIfNeeded(ThemeBloc());
     registerSingletonIfNeeded(ItemService());
     registerSingletonIfNeeded(ItemRepository());
     registerSingletonIfNeeded(ItemBloc());
