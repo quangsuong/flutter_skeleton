@@ -13,4 +13,6 @@ class SharedPreferenceKey {
   static const String langCode = 'language_code';
   static const String langKey = 'language-key';
   static const String langListKey = 'language-list-key';
+
+  static const String isDarkModeKey = 'is_dark_mode';
 }

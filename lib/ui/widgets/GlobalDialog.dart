@@ -32,14 +32,13 @@ class GlobalDialog extends StatelessWidget {
                     child:
                         Text(AppLocalizations.of(context).translate('close')),
                     onPressed: () {
-                      dialogBloc.add(HideDialogEvent());
                       Navigator.of(context).pop();
                     },
                   ),
                 ],
               );
             },
-          );
+          ).then((onValue) => {dialogBloc.add(HideDialogEvent())});
         }
       },
       child: child,
