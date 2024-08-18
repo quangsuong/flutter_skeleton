@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_skeleton/core/utils/locale_support.dart';
 
 import '../../core/di/locator.dart';
-import '../../core/utils/localization.dart';
 import '../../core/utils/navigator.dart';
 import '../../logic/blocs/dialog/dialog_bloc.dart';
 
@@ -23,14 +23,13 @@ class GlobalDialog extends StatelessWidget {
             // Use the navigator key context
             builder: (BuildContext context) {
               return AlertDialog(
-                title: Text(state.title ??
-                    AppLocalizations.of(context).translate('notification')),
+                title: Text(
+                    state.title ?? context.locale.translate('notification')),
                 content: Text(state.content),
                 elevation: 12.0,
                 actions: <Widget>[
                   TextButton(
-                    child:
-                        Text(AppLocalizations.of(context).translate('close')),
+                    child: Text(context.locale.translate('close')),
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
