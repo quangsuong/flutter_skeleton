@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_skeleton/core/constants/language.dart';
 import 'package:flutter_skeleton/core/di/locator.dart';
-import 'package:flutter_skeleton/core/utils/localization.dart';
+import 'package:flutter_skeleton/core/utils/locale_support.dart';
 import 'package:flutter_skeleton/logic/blocs/app/lang/language_bloc.dart';
 
 import '../../../core/utils/my_animations.dart';
@@ -106,8 +106,7 @@ class SettingsPage extends StatelessWidget {
                       ? MyLanguages.vi
                       : MyLanguages.en);
                 },
-                child: Text(
-                    AppLocalizations.of(context).translate('changeLanguage')),
+                child: Text(context.locale.translate('changeLanguage')),
               )
             ],
           ),
