@@ -2,12 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_skeleton/core/di/locator.dart';
-
 import 'package:flutter_skeleton/core/utils/my_color.dart';
 import 'package:flutter_skeleton/data/models/item_model.dart';
 import 'package:flutter_skeleton/logic/blocs/item_bloc.dart';
-import 'package:flutter_skeleton/ui/views/main_page.dart';
 import 'package:flutter_skeleton/ui/views/saved_item/saved_item_view_model.dart';
+import 'package:go_router/go_router.dart';
 
 class SavedItem extends StatelessWidget {
   final SavedItemViewModel viewModel =
@@ -39,7 +38,6 @@ class SavedItem extends StatelessWidget {
   }
 
   Widget _buildBody() {
-    viewModel.getLocalItemsEvent();
     return BlocBuilder<ItemBloc, ItemState>(
       bloc: viewModel.itemBloc,
       builder: (context, state) {
@@ -133,10 +131,7 @@ class SavedItem extends StatelessWidget {
   }
 
   void _onBackButtonTapped(BuildContext context) {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const MainPage()),
-    );
+    context.pop();
   }
 
   void _onTap() {
