@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_skeleton/core/route/route-name.dart';
 import 'package:flutter_skeleton/core/utils/my_color.dart';
 import 'package:flutter_skeleton/core/utils/my_images.dart';
-
-import '../main_page.dart';
+import 'package:go_router/go_router.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -28,10 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   _navigateToHome() async {
     await Future.delayed(const Duration(seconds: 3), () {});
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const MainPage()),
-    );
+    context.goNamed(RouteName.mainPage);
   }
 
   @override

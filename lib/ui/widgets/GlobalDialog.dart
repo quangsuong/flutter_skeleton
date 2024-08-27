@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_skeleton/core/utils/locale_support.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../core/di/locator.dart';
 import '../../core/utils/navigator.dart';
@@ -31,7 +32,7 @@ class GlobalDialog extends StatelessWidget {
                   TextButton(
                     child: Text(context.locale.translate('close')),
                     onPressed: () {
-                      Navigator.of(context).pop();
+                      context.pop();
                     },
                   ),
                 ],

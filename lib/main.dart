@@ -7,13 +7,12 @@ import 'package:flutter_skeleton/core/utils/localization.dart';
 import 'package:flutter_skeleton/logic/blocs/app/lang/language_bloc.dart';
 import 'package:flutter_skeleton/logic/blocs/app/theme/theme_bloc.dart';
 import 'package:flutter_skeleton/logic/blocs/app/theme/theme_event.dart';
-import 'package:flutter_skeleton/ui/views/splash/splash_screen.dart';
 import 'package:flutter_skeleton/ui/widgets/GlobalDialog.dart';
 
 import 'core/constants/env.dart';
 import 'core/constants/theme.dart';
 import 'core/di/locator.dart';
-import 'core/utils/navigator.dart';
+import 'core/route/route.dart';
 import 'firebase_options.dart';
 import 'logic/blocs/app/theme/theme_state.dart';
 import 'logic/blocs/dialog/dialog_bloc.dart';
@@ -56,8 +55,7 @@ class MyApp extends StatelessWidget {
           builder: (context, themeState) {
             return BlocBuilder<LanguageBloc, LanguageState>(
               builder: (context, state) {
-                return MaterialApp(
-                  navigatorKey: navigatorKey,
+                return MaterialApp.router(
                   title: Env.name,
                   theme: lightTheme,
                   darkTheme: darkTheme,
@@ -81,7 +79,7 @@ class MyApp extends StatelessWidget {
                               )
                         : child!,
                   ),
-                  home: const SplashScreen(),
+                  routerConfig: RouterCustom.router,
                   locale: Locale(state.locale),
                   localizationsDelegates: const [
                     AppLocalizations.delegate,
