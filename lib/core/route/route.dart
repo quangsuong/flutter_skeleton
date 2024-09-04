@@ -1,6 +1,7 @@
 // GoRouter configuration
 import 'package:flutter_skeleton/core/route/route-name.dart';
 import 'package:flutter_skeleton/core/utils/navigator.dart';
+import 'package:flutter_skeleton/ui/views/detail/detail_screen.dart';
 import 'package:flutter_skeleton/ui/views/home/home_page_screen.dart';
 import 'package:flutter_skeleton/ui/views/main_page.dart';
 import 'package:flutter_skeleton/ui/views/saved_item/saved_item.dart';
@@ -25,8 +26,14 @@ class RouterCustom {
                   GoRoute(
                       name: RouteName.saveName,
                       path: 'save-name',
-                      builder: (context, state) => SavedItem())
+                      builder: (context, state) => SavedItem()),
                 ]),
+            GoRoute(
+                name: RouteName.detail,
+                path: 'detail/:id',
+                builder: (context, state) => DetailScreen(
+                      id: state.pathParameters["id"].toString(),
+                    ))
           ]),
       GoRoute(
           name: RouteName.splash,

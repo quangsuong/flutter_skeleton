@@ -25,9 +25,8 @@ Future<void> _messageHandler(RemoteMessage message) async {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await ServiceLocator.instance.initialize();
-
-  runApp(MyApp());
   FirebaseMessaging.onBackgroundMessage(_messageHandler);
+  runApp(MyApp());
   await PushNotificationService().setupInteractedMessage();
 }
 

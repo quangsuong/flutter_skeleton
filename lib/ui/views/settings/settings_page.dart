@@ -98,7 +98,7 @@ class SettingsPage extends StatelessWidget {
               const Text('Press the button to change language'),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
+                  backgroundColor: Colors.red,
                   shadowColor: Colors.white,
                 ),
                 onPressed: () {
