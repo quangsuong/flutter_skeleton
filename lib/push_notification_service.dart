@@ -1,12 +1,13 @@
 import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_skeleton/core/route/route.dart';
 
 import 'firebase_options.dart';
 
 class PushNotificationService {
-
   Future<void> setupInteractedMessage() async {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
@@ -24,52 +25,83 @@ class PushNotificationService {
       sound: true,
     );
 
+    // When the app is opened from a notification in the background
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print("SUong");
+      print(message);
+      print("SUong");
+      print("SUong");
+      print("SUong");
+      if (message.data.isNotEmpty) {
+        // Access custom data
+        String senderId = message.data['sender_id'];
+        String messageId = message.data['detail_id'];
+        String additionalInfo = message.data['additional_info'];
+        if (messageId.isNotEmpty) {
+          RouterCustom.router.go('/detail/$messageId');
+        }
 
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {});
+        print(
+            "Sender ID: $senderId, Message ID: $messageId, Additional Info: $additionalInfo");
+      }
+    });
 
-
-    FirebaseMessaging.onMessage.listen((RemoteMessage event) {});
+    // Listen for messages when the app is in the foreground
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print("SUong");
+      print(message.data);
+      print("SUong");
+      print("SUong");
+      print("SUong");
+      if (message.data.isNotEmpty) {
+        // Access custom data
+        String senderId = message.data['sender_id'];
+        String messageId = message.data['detail_id'];
+        String additionalInfo = message.data['additional_info'];
+        if (messageId.isNotEmpty) {
+          RouterCustom.router.go('/detail/$messageId');
+        }
+        print(
+            "Sender ID: $senderId, Message ID: $messageId, Additional Info: $additionalInfo");
+      }
+    });
 
     await enableIOSNotifications();
     await registerNotificationListeners();
   }
 
   registerNotificationListeners() async {
-
     AndroidNotificationChannel channel = androidNotificationChannel();
-    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+        FlutterLocalNotificationsPlugin();
 
     await flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
-        AndroidFlutterLocalNotificationsPlugin>()
+            AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
 
-   const AndroidInitializationSettings('@mipmap/ic_launcher');
-
-
-
-
+    const AndroidInitializationSettings('@mipmap/ic_launcher');
 
     FirebaseMessaging.onMessage.listen((RemoteMessage? message) {
-        RemoteNotification? notification = message!.notification;
-        AndroidNotification? android = message.notification?.android;
-        if (notification != null && android != null) {
-          flutterLocalNotificationsPlugin.show(
-            notification.hashCode,
-            notification.title,
-            notification.body,
-            NotificationDetails(
-              android: AndroidNotificationDetails(channel.id, channel.name,
-                  channelDescription: channel.description,
-                  icon: '@mipmap/ic_launcher',
-                  playSound: true,
-                  enableVibration: true,
-                  enableLights: true,
-                  fullScreenIntent: true,
-                  priority: Priority.high,
-                  importance: Importance.high),
-            ),
-          );
+      RemoteNotification? notification = message!.notification;
+      AndroidNotification? android = message.notification?.android;
+      if (notification != null && android != null) {
+        flutterLocalNotificationsPlugin.show(
+          notification.hashCode,
+          notification.title,
+          notification.body,
+          NotificationDetails(
+            android: AndroidNotificationDetails(channel.id, channel.name,
+                channelDescription: channel.description,
+                icon: '@mipmap/ic_launcher',
+                playSound: true,
+                enableVibration: true,
+                enableLights: true,
+                fullScreenIntent: true,
+                priority: Priority.high,
+                importance: Importance.high),
+          ),
+        );
       }
     });
   }
@@ -84,49 +116,42 @@ class PushNotificationService {
   }
 
   androidNotificationChannel() => const AndroidNotificationChannel(
-    'high_importance_channel', // id
-    'High Importance Notifications', // title
-    description: 'This channel is used for important notifications.',
-    playSound: true,
-    enableVibration: true,
-    enableLights: true,
-    importance: Importance.high,
-  );
-
+        'high_importance_channel', // id
+        'High Importance Notifications', // title
+        description: 'This channel is used for important notifications.',
+        playSound: true,
+        enableVibration: true,
+        enableLights: true,
+        importance: Importance.high,
+      );
 
   Future<void> _requestPermissions() async {
-
     final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
+        FlutterLocalNotificationsPlugin();
 
     if (Platform.isIOS || Platform.isMacOS) {
       await flutterLocalNotificationsPlugin
           .resolvePlatformSpecificImplementation<
-          IOSFlutterLocalNotificationsPlugin>()
+              IOSFlutterLocalNotificationsPlugin>()
           ?.requestPermissions(
-        alert: true,
-        badge: true,
-        sound: true,
-      );
+            alert: true,
+            badge: true,
+            sound: true,
+          );
       await flutterLocalNotificationsPlugin
           .resolvePlatformSpecificImplementation<
-          MacOSFlutterLocalNotificationsPlugin>()
+              MacOSFlutterLocalNotificationsPlugin>()
           ?.requestPermissions(
-        alert: true,
-        badge: true,
-        sound: true,
-      );
+            alert: true,
+            badge: true,
+            sound: true,
+          );
     } else if (Platform.isAndroid) {
       final AndroidFlutterLocalNotificationsPlugin? androidImplementation =
-      flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin>();
+          flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin>();
 
       await androidImplementation?.requestNotificationsPermission();
-
     }
   }
-
-
-
-
 }

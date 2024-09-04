@@ -1,6 +1,6 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_skeleton/core/utils/locale_support.dart';
-import 'package:flutter_skeleton/core/utils/localization.dart';
 import 'package:flutter_skeleton/ui/views/login/login_view.dart';
 import 'package:flutter_skeleton/ui/views/settings/settings_page.dart';
 
@@ -16,6 +16,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  String _fcmToken = 'Fetching token...';
   int _currentIndex = 0;
   final List<Widget> _pages = [
     HomePage(),
@@ -23,11 +24,32 @@ class _MainPageState extends State<MainPage> {
     SettingsPage(),
     LoginView(),
   ];
+  @override
+  void initState() {
+    super.initState();
+    _getToken();
+  }
 
   void _onTabTapped(int index) {
     setState(() {
       _currentIndex = index;
     });
+  }
+
+  Future<void> _getToken() async {
+    try {
+      FirebaseMessaging messaging = FirebaseMessaging.instance;
+      String? token = await messaging.getToken();
+      print(token);
+      setState(() {
+        _fcmToken = token ?? 'Failed to get token';
+      });
+    } catch (e) {
+      print('Error fetching token: $e');
+      setState(() {
+        _fcmToken = 'Error fetching token: $e';
+      });
+    }
   }
 
   @override
