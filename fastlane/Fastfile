@@ -1,19 +1,16 @@
 fastlane_require 'dotenv'
 
 default_platform(:android)
+
 before_all do
   # Have an easy way to get the root of the project
   def root_path
     Dir.pwd.sub(/.*\Kfastlane/, '').sub(/.*\Kandroid/, '').sub(/.*\Kios/, '').sub(/.*\K\/\//, '')
   end
+
   # Load environment variables
   UI.message("env file path: #{root_path}env/.env.#{ENV['ENVFILE']}")
   Dotenv.load("#{root_path}env/.env.#{ENV['ENVFILE']}")
-
-  # Have an easy way to get the root of the project
-  def root_path
-    Dir.pwd.sub(/.*\Kfastlane/, '').sub(/.*\Kandroid/, '').sub(/.*\Kios/, '').sub(/.*\K\/\//, '')
-  end
 
   # Have an easy way to run flutter tasks on the root of the project
   lane :sh_on_root do |options|
@@ -30,10 +27,10 @@ platform :android do
   end
 
   private_lane :delete_apk do
-      desc "Deleting Android APK"
-      sh_on_root(command: "rm -rf #{root_path}/build/app/outputs/flutter-apk")
-      sh_on_root(command: "rm -rf #{root_path}/build/app/outputs/apk")
-    end
+    desc "Deleting Android APK"
+    sh_on_root(command: "rm -rf #{root_path}/build/app/outputs/flutter-apk")
+    sh_on_root(command: "rm -rf #{root_path}/build/app/outputs/apk")
+  end
 
   lane :deploy do
     build_apk
@@ -44,7 +41,7 @@ platform :android do
       android_artifact_type: "APK",
       android_artifact_path: "#{root_path}build/app/outputs/flutter-apk/app-#{ENV['SCHEME']}-release.apk",
       release_notes: ENV['ANDROID_FIREBASE_APP_DISTRIBUTION_RELEASE_NOTES'],
-      service_credentials_file: ENV['ANDROID_FIREBASE_APP_DISTRIBUTION_CREDENTIALS_FILE_PATH'],
+      service_credentials_file: ENV['FIREBASE_APP_DISTRIBUTION_CREDENTIALS_FILE_PATH'],
     )
 
     delete_apk
@@ -55,9 +52,9 @@ platform :ios do
   # Updates XCode project settings to use a different code signing based on method
   private_lane :archive do |options|
     method = options[:method]
-    env = ENV['IOS_SCHEME']
-    scheme = env == "dev" ? "dev" : "prod"
-    configuration = env == "dev" ? "Release-dev" : "Release-prod"
+    env = ENV['SCHEME']
+    scheme = env
+    configuration = env == "dev" ? "Release-dev" : "Release-production"
 
     update_code_signing_settings(
       build_configurations: configuration,
@@ -80,24 +77,60 @@ platform :ios do
   end
 
   lane :build do |options|
-    env = ENV['IOS_SCHEME']
+    env = ENV['SCHEME']
+    desc("IOS_SCHEME... #{env}")
 
-    params = env == "dev" ? '--flavor dev -t lib/main_dev.dart ' : '--flavor prod -t lib/main_prod.dart '
+    params = "--flavor #{env} -t lib/main.dart"
     desc("Cleaning...")
-    sh_on_root(command: "fvm use #{ENV['FLUTTER_VERSION']} && fvm flutter clean && rm -Rf ios/Pods && rm -Rf ios/.symlinks && rm -Rf ios/Flutter/Flutter.framework && rm -Rf ios/Flutter/Flutter.podspec")
+    sh_on_root(command: "fvm flutter clean && rm -Rf ios/Pods && rm -Rf ios/.symlinks && rm -Rf ios/Flutter/Flutter.framework && rm -Rf ios/Flutter/Flutter.podspec")
     desc("Building...")
-    sh_on_root(command: "fvm use #{ENV['FLUTTER_VERSION']} && fvm flutter build ipa #{params}")
+    sh_on_root(command: "fvm flutter build ipa #{params}")
   end
 
-  lane :deploy_staging do
+  lane :deploy do
     build(sign_enabled: true)
     archive(method: "ad-hoc")
 
     firebase_app_distribution(
-      app: ENV['IOS_FIREBASE_APP_DISTRIBUTION_APP'],
+      app: ENV['FIREBASE_IOS_APP_ID'],
       testers: ENV['IOS_FIREBASE_APP_DISTRIBUTION_TESTERS'],
       release_notes: ENV['IOS_FIREBASE_APP_DISTRIBUTION_RELEASE_NOTES'],
-      service_credentials_file: ENV['IOS_FIREBASE_APP_DISTRIBUTION_CREDENTIALS_FILE_PATH'],
+      service_credentials_file: ENV['FIREBASE_APP_DISTRIBUTION_CREDENTIALS_FILE_PATH'],
+    )
+  end
+
+  lane :deploy_test_flight do
+    env = ENV['SCHEME']
+    desc "Build iOS app with flavor and dart defines"
+    lane :build_ios do
+        sh_on_root(command: "make build-ipa")
+    end
+#     increment_build_number(
+#       xcodeproj: "ios/Runner.xcodeproj", # Use workspace if you're using CocoaPods
+#     )
+#     build_ios
+#     build_app(
+#       workspace: "ios/Runner.xcworkspace", # Use workspace if you're using CocoaPods
+#       scheme: "dev",
+#       export_method: "app-store", # For App Store distribution
+#       output_directory: "./build/ios", # Make sure the path exists and is correct
+#       output_name: "MyApp.ipa", # Name your output .ipa file
+#       clean: true
+#     )
+
+    # Upload to TestFlight
+    upload_to_testflight(
+      ipa: "./build/ios/fluter_skeleton.ipa",
+      api_key: app_store_connect_api_key(
+        key_id: ENV['APPLE_STORE_KEY_ID'],
+        issuer_id: ENV['APPLE_STORE_ISSUER_ID'],
+        key_filepath: ENV['APPLE_STORE_CREDENTIALS_FILE_PATH']
+      ),
+      distribute_external: false,                 # Distribute to external testers
+      groups: ["Aedev"],
+      changelog: ENV['STORE_CHANGE_LOG'],
+      beta_app_description: "Beta version for testing.", # Description for TestFlight
+      beta_app_feedback_email: "quangsuong95@gmail.com"    # Email for feedback
     )
   end
 end

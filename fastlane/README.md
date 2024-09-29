@@ -21,6 +21,14 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 
 
+### build_ios
+
+```sh
+[bundle exec] fastlane build_ios
+```
+
+Build iOS app with flavor and dart defines
+
 ----
 
 
@@ -47,10 +55,18 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 
 
-### ios deploy_staging
+### ios deploy
 
 ```sh
-[bundle exec] fastlane ios deploy_staging
+[bundle exec] fastlane ios deploy
+```
+
+
+
+### ios deploy_test_flight
+
+```sh
+[bundle exec] fastlane ios deploy_test_flight
 ```
 
 
