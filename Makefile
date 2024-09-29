@@ -23,7 +23,7 @@ build-aab: env/.env.$(env)
 build-ipa: env/.env.$(env)
 	bash scripts/fvm-run.sh
 	flutter pub get
-	flutter build ios --flavor $(env) -t lib/main.dart --release $(shell awk '{print "--dart-define=" $$0}' env/.env.$(env))
+	flutter build ipa --flavor $(env) -t lib/main.dart --release $(shell awk '{print "--dart-define=" $$0}' env/.env.$(env))
 
 #Deploy to app distribution
 deploy-android: env/.env.$(env)
@@ -32,4 +32,4 @@ deploy-android: env/.env.$(env)
 
 deploy-ios: env/.env.$(env)
 	bash scripts/fvm-run.sh
-	ENVFILE=$(env) fastlane ios beta
+	ENVFILE=$(env) fastlane ios deploy_test_flight
