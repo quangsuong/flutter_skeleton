@@ -5,7 +5,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/di/locator.dart';
-import '../../../core/utils/my_color.dart';
+import '../../../core/constants/my_color.dart';
 import '../../../logic/blocs/item_bloc.dart';
 import 'home_view_model.dart';
 
@@ -30,8 +30,6 @@ class HomePage extends StatelessWidget {
       body: BlocBuilder<ItemBloc, ItemState>(
         bloc: viewModel.itemBloc,
         builder: (context, state) {
-          print('state');
-          print(state);
           if (state is ItemLoading) {
             return const Center(
                 child: SpinKitCircle(size: 50, color: MyColor.colorBlack));
@@ -85,7 +83,6 @@ class HomePage extends StatelessWidget {
                 fontFamily: 'Butler',
                 fontWeight: FontWeight.w900,
                 fontSize: 18,
-                color: MyColor.colorBlack,
               ),
             ),
 

@@ -13,6 +13,7 @@ import 'core/constants/env.dart';
 import 'core/constants/theme.dart';
 import 'core/di/locator.dart';
 import 'core/route/route.dart';
+import 'core/utils/size_utils.dart';
 import 'firebase_options.dart';
 import 'logic/blocs/app/theme/theme_state.dart';
 import 'logic/blocs/dialog/dialog_bloc.dart';
@@ -21,12 +22,17 @@ import 'push_notification_service.dart';
 Future<void> _messageHandler(RemoteMessage message) async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 }
-
+var globalMessengerKey = GlobalKey<ScaffoldMessengerState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await ServiceLocator.instance.initialize();
   FirebaseMessaging.onBackgroundMessage(_messageHandler);
-  runApp(MyApp());
+  runApp(Sizer(
+    builder: (context, orientation, deviceType) {
+      return MyApp();
+    },
+  ));
+
   await PushNotificationService().setupInteractedMessage();
 }
 

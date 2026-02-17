@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_skeleton/core/route/route-name.dart';
-import 'package:flutter_skeleton/core/utils/my_color.dart';
+import 'package:flutter_skeleton/core/constants/my_color.dart';
 import 'package:flutter_skeleton/core/utils/my_images.dart';
 import 'package:go_router/go_router.dart';
 

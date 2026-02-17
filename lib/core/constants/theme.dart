@@ -50,7 +50,7 @@ final ThemeData darkTheme = ThemeData(
   ),
 );
 
-const Color primaryColorLight = Color(0xFF6200EE);
+const Color primaryColorLight = Color(0xFF0F8AE6);
 const Color secondaryColorLight = Color(0xFF03DAC6);
 const Color backgroundColorLight = Color(0xFFFFFFFF);
 const Color surfaceColorLight = Color(0xFFFFFFFF);
@@ -61,7 +61,7 @@ const Color onBackgroundColorLight = Color(0xFF000000);
 const Color onSurfaceColorLight = Color(0xFF000000);
 const Color onErrorColorLight = Color(0xFFFFFFFF);
 
-const Color primaryColorDark = Color(0xFFBB86FC);
+const Color primaryColorDark = Color(0xFF0F8AE6);
 const Color secondaryColorDark = Color(0xFF03DAC6);
 const Color backgroundColorDark = Color(0xFF121212);
 const Color surfaceColorDark = Color(0xFF121212);
