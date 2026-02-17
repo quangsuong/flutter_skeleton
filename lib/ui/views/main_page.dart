@@ -4,7 +4,7 @@ import 'package:flutter_skeleton/core/utils/locale_support.dart';
 import 'package:flutter_skeleton/ui/views/login/login_view.dart';
 import 'package:flutter_skeleton/ui/views/settings/settings_page.dart';
 
-import '../../core/utils/my_color.dart';
+import '../../core/constants/my_color.dart';
 import 'home/home_page_screen.dart';
 import 'user/user_page.dart';
 

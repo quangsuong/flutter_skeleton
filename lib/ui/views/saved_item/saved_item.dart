@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_skeleton/core/di/locator.dart';
-import 'package:flutter_skeleton/core/utils/my_color.dart';
+import 'package:flutter_skeleton/core/constants/my_color.dart';
 import 'package:flutter_skeleton/data/models/item_model.dart';
 import 'package:flutter_skeleton/logic/blocs/item_bloc.dart';
 import 'package:flutter_skeleton/ui/views/saved_item/saved_item_view_model.dart';

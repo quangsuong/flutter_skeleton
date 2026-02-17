@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_skeleton/core/utils/locale_support.dart';
 import 'package:flutter_skeleton/data/models/login_model.dart';
 import 'package:flutter_skeleton/ui/views/login/login_view_model.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
+import '../../../core/app_export.dart';
 import '../../../core/di/locator.dart';
 import '../../../logic/blocs/login/login_bloc.dart';
+import '../../widgets/custom_text_form_field.dart';
 
 class LoginView extends StatelessWidget {
   final LoginViewModel loginViewModel =
@@ -24,17 +25,44 @@ class LoginView extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            TextField(
+            Center(
+              child: Image.asset(
+                'assets/images/splash_logo.png',
+                // Replace with your logo asset path
+                height: 80,
+              ),
+            ),
+            const SizedBox(height: 24),
+            Text(
+              'Login to Your Account',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 24),
+            CustomTextFormField(
+              hintText: context.locale.translate('username'),
+              prefix: Icon(Icons.person),
               controller: _usernameController,
-              decoration: InputDecoration(
-                  labelText: context.locale.translate('username')),
             ),
             TextField(
               controller: _passwordController,
               decoration: InputDecoration(
-                  labelText: context.locale.translate('password')),
+                prefixIcon: Icon(Icons.lock),
+                filled: true,
+                fillColor: Colors.grey[200],
+                hintText: context.locale.translate('password'),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                  borderSide: BorderSide.none,
+                ),
+                suffixIcon: Icon(Icons.visibility_off),
+              ),
               obscureText: true,
             ),
             const SizedBox(height: 20),

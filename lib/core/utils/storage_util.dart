@@ -26,4 +26,15 @@ class StorageUtil {
     return _sharedPreferences.getString(SharedPreferenceKey.refreshTokenKey) ??
         '';
   }
+
+  static bool loadTheme() {
+    final isDarkMode =
+        _sharedPreferences.getBool(SharedPreferenceKey.isDarkModeKey) ?? false;
+    return isDarkMode;
+  }
+
+  static void saveTheme(bool isDarkMode) async {
+    await _sharedPreferences.setBool(
+        SharedPreferenceKey.isDarkModeKey, isDarkMode);
+  }
 }
